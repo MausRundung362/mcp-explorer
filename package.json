@@ -1,7 +1,7 @@
 {
   "name": "project-explorer",
   "version": "0.1.0",
-  "description": "An MCP server for exploring project folders and analyzing imports/exports",
+  "description": "An MCP server for exploring project folders and analyzing imports/exports.",
   "private": true,
   "type": "module",
   "bin": {
