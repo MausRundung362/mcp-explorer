@@ -1,10 +1,27 @@
 # 🔍 Project Explorer MCP Server
 
 > **A powerful Model Context Protocol server for exploring, analyzing, and managing project files with advanced search capabilities**
+>
+> **📦 Available on npm:** [`@team-jd/mcp-project-explorer`](https://www.npmjs.com/package/@team-jd/mcp-project-explorer)
 
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](package.json)
+## ⚡ Quick Start
+
+```json
+{
+  "mcpServers": {
+    "project-explorer": {
+      "command": "npx",
+      "args": ["-y", "@team-jd/mcp-project-explorer", "/your/project/path"]
+    }
+  }
+}
+```
+
+[![npm version](https://img.shields.io/npm/v/@team-jd/mcp-project-explorer.svg)](https://www.npmjs.com/package/@team-jd/mcp-project-explorer)
+[![npm downloads](https://img.shields.io/npm/dm/@team-jd/mcp-project-explorer.svg)](https://www.npmjs.com/package/@team-jd/mcp-project-explorer)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D16-green.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org)
+[![GitHub](https://img.shields.io/badge/GitHub-MCP--Explorer-blue.svg)](https://github.com/MausRundung362/mcp-explorer)
 
 ---
 
@@ -14,7 +31,50 @@ The Project Explorer MCP Server provides comprehensive tools for analyzing proje
 
 ## 📦 Installation & Setup
 
+### 🚀 For MCP Users (Recommended)
+
+Add this server to your MCP settings configuration:
+
+```json
+{
+  "mcpServers": {
+    "project-explorer": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@team-jd/mcp-project-explorer",
+        "/path/to/your/project"
+      ]
+    }
+  }
+}
+```
+
+**📁 Multiple Directory Access:**
+```json
+{
+  "mcpServers": {
+    "project-explorer": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@team-jd/mcp-project-explorer",
+        "/path/to/project1",
+        "/path/to/project2",
+        "/path/to/project3"
+      ]
+    }
+  }
+}
+```
+
+### 🛠️ For Developers
+
 ```bash
+# Clone and setup for development
+git clone https://github.com/MausRundung362/mcp-explorer.git
+cd mcp-explorer
+
 # Install dependencies
 npm install
 
