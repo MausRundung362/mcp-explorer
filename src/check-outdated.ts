@@ -91,7 +91,7 @@ export async function handleCheckOutdated(args: any, allowedDirectories: string[
     // Execute npm outdated command
     const { stdout, stderr } = await execAsync(command, { 
       cwd: resolvedPath,
-      timeout: 30000 // 30 second timeout
+      timeout: 10000 // 10 second timeout
     });
 
     let outdatedData: any = {};
@@ -177,9 +177,82 @@ export async function handleCheckOutdated(args: any, allowedDirectories: string[
 
   } catch (error: any) {
     // npm outdated exits with code 1 when packages are outdated, this is normal
-    if (error.code === 1 && error.stdout) {
+    if (error.code === 1) {
       // This is the normal case - packages are outdated
-      return handleCheckOutdated(args, allowedDirectories);
+      let outdatedData: any = {};
+      let rawOutput = error.stdout || error.stderr || '';
+
+      // Try to parse JSON from stdout or stderr
+      const outputToParse = error.stdout || error.stderr || '';
+      if (outputToParse && outputToParse.trim()) {
+        try {
+          outdatedData = JSON.parse(outputToParse);
+        } catch (parseError) {
+          // If JSON parsing fails, treat as no outdated packages
+          outdatedData = {};
+        }
+      }
+
+      // Parse the outdated packages
+      const outdatedPackages: OutdatedPackage[] = [];
+      
+      for (const [packageName, info] of Object.entries(outdatedData)) {
+        if (typeof info === 'object' && info !== null) {
+          const packageInfo = info as any;
+          outdatedPackages.push({
+            package: packageName,
+            current: packageInfo.current || 'unknown',
+            wanted: packageInfo.wanted || 'unknown', 
+            latest: packageInfo.latest || 'unknown',
+            location: packageInfo.location || resolvedPath,
+            type: packageInfo.type || 'dependencies'
+          });
+        }
+      }
+
+      const totalOutdated = outdatedPackages.length;
+      const hasOutdated = totalOutdated > 0;
+
+      let message: string;
+      if (!hasOutdated) {
+        message = "All packages are up to date! 🎉";
+      } else {
+        message = `Found ${totalOutdated} outdated package${totalOutdated === 1 ? '' : 's'}`;
+        
+        if (outputFormat === "detailed") {
+          message += ":\n\n";
+          outdatedPackages.forEach(pkg => {
+            message += `📦 ${pkg.package}\n`;
+            message += `   Current: ${pkg.current}\n`;
+            message += `   Wanted:  ${pkg.wanted}\n`;
+            message += `   Latest:  ${pkg.latest}\n`;
+            message += `   Type:    ${pkg.type}\n\n`;
+          });
+          message += "Run 'npm update' to update to wanted versions or 'npm install <package>@latest' for latest versions.";
+        } else if (outputFormat === "summary") {
+          const depTypes = outdatedPackages.reduce((acc, pkg) => {
+            acc[pkg.type] = (acc[pkg.type] || 0) + 1;
+            return acc;
+          }, {} as Record<string, number>);
+          
+          message += "\n\nBreakdown by type:\n";
+          Object.entries(depTypes).forEach(([type, count]) => {
+            message += `- ${type}: ${count}\n`;
+          });
+        }
+      }
+
+      return {
+        toolResult: {
+          success: true,
+          hasOutdated,
+          outdatedPackages,
+          totalOutdated,
+          packageJsonPath,
+          message,
+          rawOutput: outputFormat === "raw" ? rawOutput : undefined
+        }
+      };
     }
 
     let errorMessage = `Failed to check outdated packages: ${error.message}`;
