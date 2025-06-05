@@ -1,0 +1,22 @@
+# Smithery configuration file: https://smithery.ai/docs/build/project-config
+
+startCommand:
+  type: stdio
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => ({ command: 'node', args: ['build/index.js', ...config.allowedDirectories] })
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - allowedDirectories
+    properties:
+      allowedDirectories:
+        type: array
+        items:
+          type: string
+        description: List of directories the server can explore and operate on
+  exampleConfig:
+    allowedDirectories:
+      - /path/to/project
