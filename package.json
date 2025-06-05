@@ -1,8 +1,14 @@
 {
-  "name": "project-explorer",
+  "name": "@team-jd/mcp-project-explorer",
   "version": "0.1.0",
   "description": "An MCP server for exploring project folders and analyzing imports/exports.",
-  "private": true,
+  "keywords": ["mcp", "model-context-protocol", "file-explorer", "project-analyzer"],
+  "author": "Noah Jansky <noah.jansky@outlook.de>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MausRundung362/mcp-explorer.git"
+  },
   "type": "module",
   "bin": {
     "project-explorer": "./build/index.js"
