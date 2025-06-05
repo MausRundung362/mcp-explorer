@@ -1,0 +1,98 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.npm/
+.yarn/
+.pnpm/
+
+# Package Lock Files (IGNORING THESE IS GENERALLY NOT RECOMMENDED FOR APPLICATIONS)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build artifacts
+# Compiled TypeScript output (JavaScript, sourcemaps, declaration files)
+# Adjust these paths based on your tsconfig.json's `outDir`
+dist/
+build/
+out/
+es/
+lib/
+tmp/
+temp/
+
+# For projects that compile directly to the root, though it's less common
+# /*.js
+# /*.js.map
+# /*.d.ts
+
+# Jest/Vitest/Testing artifacts
+coverage/
+.nyc_output/
+.vitest/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+
+# Editor/IDE specific files
+.idea/                          # JetBrains IDEs (WebStorm, IntelliJ)
+*.iml                           # JetBrains IDEs
+.project                        # Eclipse
+.classpath                      # Eclipse
+.c9/                            # Cloud9 IDE
+.vscode/                        # VS Code (ignore specific files if you want to share config)
+# Uncomment the following lines to ignore specific VS Code files if you want
+# to share general workspace settings but ignore user-specific ones.
+# .vscode/settings.json
+ .vscode/launch.json
+ .vscode/tasks.json
+ .vscode/*.code-workspace
+ .vscode/extensions.json
+ .vscode/.history/             # VS Code Local History
+ .vscode/.browserslistrc.json
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Other common temporary files and caches
+*.bak
+*.swp
+*~
+#*#
+.eslintcache
+.prettiercache
+.cache/
+.next/                          # Next.js build output
+.nuxt/                          # Nuxt.js build output
+.vercel/                        # Vercel deployment cache
+.netlify/                       # Netlify deployment cache
+
+# Test specific (e.g., Cypress)
+cypress/videos/
+cypress/screenshots/
+
+# Storybook (if used)
+storybook-static/
+
+# GraphQL Code Generator artifacts
+src/generated/graphql.ts # Or whatever path you generate to
+
+# Docker (if used)
+.dockerignore
+
+# Misc.
+.serverless/ # Serverless Framework related
+.aws-sam/ # AWS SAM related
