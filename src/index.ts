@@ -11,6 +11,9 @@ import {
 import { exploreProjectTool, handleExploreProject } from './explore-project.js';
 import { listAllowedTool, handleListAllowed } from './list-allowed.js';
 import { searchTool, handleSearch } from './search.js';
+import { renameFileTool, handleRenameFile } from './rename-file.js';
+import { deleteFileTool, handleDeleteFile } from './delete-file.js';
+import { checkOutdatedTool, handleCheckOutdated } from './check-outdated.js';
 
 // Get allowed directories from command line arguments (all args after the script path)
 const ALLOWED_DIRECTORIES = process.argv.slice(2).map(dir => dir.replace(/\\/g, '/'));
@@ -37,7 +40,10 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     tools: [
       exploreProjectTool,
       listAllowedTool,
-      searchTool
+      searchTool,
+      renameFileTool,
+      deleteFileTool,
+      checkOutdatedTool
     ]
   };
 });
@@ -59,6 +65,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       
     case "search_files":
       return await handleSearch(args, ALLOWED_DIRECTORIES);
+      
+    case "rename_file":
+      return await handleRenameFile(args, ALLOWED_DIRECTORIES);
+      
+    case "delete_file":
+      return await handleDeleteFile(args, ALLOWED_DIRECTORIES);
+      
+    case "check_outdated":
+      return await handleCheckOutdated(args, ALLOWED_DIRECTORIES);
       
     default:
       throw new McpError(
